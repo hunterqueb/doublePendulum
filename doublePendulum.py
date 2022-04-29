@@ -49,8 +49,8 @@ if __name__ == "__main__":
     tStart = 0
     tEnd = 10
     tSpan = np.array([tStart,tEnd])
-    tSpanExplicit = np.linspace(tStart,tEnd,500)
-    dt = tSpanExplicit[1] - tSpanExplicit[0]
+    dt = 0.01
+    tSpanExplicit = np.linspace(tStart,tEnd,int(tEnd / dt))
 
     start = time.time()
     sol = myRK4(doublePendulumODE,initialConditions,tSpanExplicit,parameters)
