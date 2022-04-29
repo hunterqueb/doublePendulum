@@ -1,5 +1,6 @@
 import numpy as np
 import time
+import os
 
 import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
@@ -31,7 +32,6 @@ def doublePendulumODE(t,y,p):
     return np.array((dydt1,dydt2,dydt3,dydt4))
 
 if __name__ == "__main__":
-    
     m1 = 1
     m2 = m1
     l1 = 1
@@ -79,6 +79,10 @@ if __name__ == "__main__":
     # https://scipython.com/blog/the-double-pendulum/
     def animateGIF():
         images = []
+        if not os.path.exists("frames/"):
+            os.makedirs("frames/")
+        if not os.path.exists("gifs/"):
+            os.makedirs("gifs/")
         # Convert to Cartesian coordinates of the two bob positions.
         x1 = l1 * np.sin(theta1)
         y1 = -l1 * np.cos(theta1)
