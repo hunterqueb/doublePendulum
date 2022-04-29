@@ -1,0 +1,3 @@
+# doublePendulum
+
+![](gifs/doublePendulum.gif)
