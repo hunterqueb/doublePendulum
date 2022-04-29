@@ -1,7 +1,5 @@
-from numba import njit
 from numpy import zeros
 
-@njit(nogil=True)
 def myRK4(func,y0,tSpan,paramaters):
     '''This function provides a sovler for any first order system using RK4 fixed time step algorithm.
 

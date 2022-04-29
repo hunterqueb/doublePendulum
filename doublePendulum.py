@@ -1,5 +1,4 @@
 import numpy as np
-from numba import njit
 import time
 
 import matplotlib.pyplot as plt
@@ -8,7 +7,6 @@ import imageio
 
 from utils.shared.integrators import myRK4 
 
-@njit(nogil=True)
 def doublePendulumODE(t,y,p):
     # p = [m1,m2,l1,l2,g]
     m1 = p[0]
