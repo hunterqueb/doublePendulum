@@ -20,13 +20,15 @@ def doublePendulumODE(t,y,p):
     theta1 = y[0]
     theta2 = y[2]
 
-    dydt1 = y[1]
+    dydt1 = y[1] #theta1dot
 
-    dydt2 = (m2*g*np.sin(theta2)*np.cos(theta1-theta2) - m2*np.sin(theta1-theta2)*(l1*y[1]**2*np.cos(theta1-theta2) + l2*y[3]**2) - (m1+m2)*g*np.sin(theta1)) / l1 / (m1 + m2*np.sin(theta1-theta2)**2)
+    dydt2 = (m2*g*np.sin(theta2)*np.cos(theta1-theta2) - m2*np.sin(theta1-theta2)*(l1*y[1]**2*np.cos(theta1-theta2) + l2*y[3]**2)
+            - (m1+m2)*g*np.sin(theta1)) / l1 / (m1 + m2*np.sin(theta1-theta2)**2) #theta1ddot
 
-    dydt3 = y[3]
+    dydt3 = y[3] #theta2dot
 
-    dydt4 = ((m1+m2)*(l1*y[1]**2*np.sin(theta1-theta2) - g*np.sin(theta2) + g*np.sin(theta1)*np.cos(theta1-theta2)) + m2*l2*y[3]**2*np.sin(theta1-theta2)*np.cos(theta1-theta2)) / l2 / (m1 + m2*np.sin(theta1-theta2)**2)
+    dydt4 = ((m1+m2)*(l1*y[1]**2*np.sin(theta1-theta2) - g*np.sin(theta2) + g*np.sin(theta1)*np.cos(theta1-theta2))
+            + m2*l2*y[3]**2*np.sin(theta1-theta2)*np.cos(theta1-theta2)) / l2 / (m1 + m2*np.sin(theta1-theta2)**2) #theta2ddot
 
     return np.array((dydt1,dydt2,dydt3,dydt4))
 
@@ -58,6 +60,22 @@ if __name__ == "__main__":
     print("solution time: ",(end - start))
     
     theta1, theta2 = sol[:,0], sol[:,2]
+    theta1dot, theta2dot = sol[:,1], sol[:,3]
+
+    # phase portrait of each generalized coordinate
+    plt.subplot(2, 1, 1)
+    plt.plot(theta1,theta1dot,'b')
+    plt.xlabel('Theta 1')
+    plt.ylabel('Theta 1 Dot')
+    plt.axis('equal')
+
+    plt.subplot(2, 1, 2)
+    plt.plot(theta2,theta2dot,'r')
+    plt.xlabel('Theta 2')
+    plt.ylabel('Theta 2 Dot')
+    plt.axis('equal')
+
+    plt.show()
 
     # visualizer taken from:
     # https://scipython.com/blog/the-double-pendulum/
