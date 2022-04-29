@@ -1,4 +1,4 @@
-from numba import cuda,njit
+from numba import njit
 from numpy import zeros
 
 @njit(nogil=True)
