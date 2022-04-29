@@ -57,11 +57,10 @@ if __name__ == "__main__":
     end = time.time()
     print("solution time: ",(end - start))
     
-    plt.plot(tSpanExplicit,sol[:,2],label = 'Nonlinear')
-    # plt.show()
-    # Unpack z and theta as a function of time
     theta1, theta2 = sol[:,0], sol[:,2]
 
+    # visualizer taken from:
+    # https://scipython.com/blog/the-double-pendulum/
     def animateGIF():
         images = []
         # Convert to Cartesian coordinates of the two bob positions.
