@@ -6,9 +6,18 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
 import imageio
 
-from utils.shared.integrators import myRK4 
+# from utils.shared.integrators import myRK4 
+from qutils.integrators import ode85
 
-def doublePendulumODE(t,y,p):
+m1 = 1
+m2 = m1
+l1 = 1
+l2 = l1
+g = 9.81
+parameters = np.array([m1,m2,l1,l2,g])
+
+
+def doublePendulumODE(t,y,p=parameters):
     # p = [m1,m2,l1,l2,g]
     m1 = p[0]
     m2 = p[1]
@@ -32,28 +41,22 @@ def doublePendulumODE(t,y,p):
     return np.array((dydt1,dydt2,dydt3,dydt4))
 
 if __name__ == "__main__":
-    m1 = 1
-    m2 = m1
-    l1 = 1
-    l2 = l1
-    g = 9.81
-    parameters = np.array([m1,m2,l1,l2,g])
 
-    theta1_0 = np.radians(90)
-    theta2_0 = np.radians(136)
-    thetadot1_0 = np.radians(0)
-    thetadot2_0 = np.radians(0)
+    theta1_0 = np.radians(80)
+    theta2_0 = np.radians(135)
+    thetadot1_0 = np.radians(-1)
+    thetadot2_0 = np.radians(0.7)
 
     initialConditions = np.array([theta1_0,thetadot1_0,theta2_0,thetadot2_0],dtype=np.float64)
     
     tStart = 0
-    tEnd = 10
+    tEnd = 20
     tSpan = np.array([tStart,tEnd])
     dt = 0.01
     tSpanExplicit = np.linspace(tStart,tEnd,int(tEnd / dt))
 
     start = time.time()
-    sol = myRK4(doublePendulumODE,initialConditions,tSpanExplicit,parameters)
+    tSol, sol = ode85(doublePendulumODE,[tStart,tEnd],initialConditions,tSpanExplicit)
     end = time.time()
     print("solution time: ",(end - start))
     
@@ -129,7 +132,7 @@ if __name__ == "__main__":
             ax.set_ylim(-l1-l2-r, l1+l2+r)
             ax.set_aspect('equal', adjustable='box')
             plt.axis('off')
-            plt.savefig('frames/_img{:04d}.png'.format(i//di), dpi=72)
+            plt.savefig('frames/_img{:04d}.png'.format(i//di), dpi=300)
             images.append(imageio.imread('frames/_img{:04d}.png'.format(i//di)))
             plt.cla()
 
